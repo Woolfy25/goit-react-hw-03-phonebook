@@ -17,6 +17,19 @@ class Form extends React.Component {
   numberLabelID = nanoid();
   filterLabelID = nanoid();
 
+  componentDidMount() {
+    const savedContacts = JSON.parse(localStorage.getItem('contacts'));
+    if (savedContacts) {
+      this.setState({ contacts: savedContacts });
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.contacts !== this.state.contacts) {
+      localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+    }
+  }
+
   handleNameChange = event => {
     this.setState({ name: event.target.value });
   };
